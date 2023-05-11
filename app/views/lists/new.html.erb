@@ -1,0 +1,32 @@
+<h1>新規投稿</h1>
+<% if @list.errors.any? %>
+<ul>
+    <% @list.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+    <% end %>
+</ul>
+<% end %>
+<!--form_with部分
+Viewなどから呼び出す共通処理をまとめた「ヘルパーメソッド」の1つで
+セキュリティ対策などが組み込まれた安全なHTMLのformタグを作成でき、
+Railsの機能を最大限生かすことが可能
+List.newとモデルと連携させることにより、送信先のURLを判別するもの。
+ オプションは
+ url
+どのURLへフォームの情報を送信するか
+ method
+HTTPメソッドを指定-->
+<%= form_with model: @list, url: '/lists', method: :post do |f| %>
+
+<h4>タイトル</h4>
+<%= f.text_field :title %>
+
+<h4>本文</h4>
+<%= f.text_area :body %>
+
+<h4>画像</h4>
+<%= f.file_field :image, accept: "image/*" %>
+
+<%= f.submit '投稿' %>
+<% end %>
+<!--form_withはViewで使用することができ、doからendまでが範囲-->
